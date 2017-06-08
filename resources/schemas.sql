@@ -1,16 +1,14 @@
-CREATE EXTENSION IF NOT EXISTS pgcrypto;
-
 CREATE TABLE IF NOT EXISTS public."users"
 (
-  uid UUID DEFAULT gen_random_uuid() PRIMARY KEY NOT NULL,
+  id UUID    PRIMARY KEY NOT NULL,
   first_name VARCHAR(64),
   last_name  VARCHAR(64),
-  email     VARCHAR(256),
-  password  VARCHAR(256),
-  created_at TIMESTAMP,
-  updated_at TIMESTAMP,
+  email      VARCHAR(256) NOT NULL,
+  password   VARCHAR(256),
+  created_at TIMESTAMP DEFAULT now(),
+  updated_at TIMESTAMP DEFAULT now(),
   deleted_at TIMESTAMP
 );
 
-CREATE UNIQUE INDEX IF NOT EXISTS user_uid_uindex ON public."users" (UID);
-CREATE UNIQUE INDEX IF NOT EXISTS user_email_uindex ON public."users" (Email);
+CREATE UNIQUE INDEX IF NOT EXISTS user_id_uindex ON public."users" (id);
+CREATE UNIQUE INDEX IF NOT EXISTS user_email_uindex ON public."users" (email);

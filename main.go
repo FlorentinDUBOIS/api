@@ -1,27 +1,38 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-	"gitlab.com/FlorentinDUBOIS/api/controllers"
+  "os"
+
+  "github.com/gin-gonic/gin"
+  "github.com/sirupsen/logrus"
+  "gitlab.com/FlorentinDUBOIS/api/src/controllers"
 )
 
+var userController = controllers.UserController{}
+
 func main() {
-	router := gin.New()
+  router := gin.New()
 
-	router.Use(gin.Logger())
-	router.Use(gin.Recovery())
+  logrus.SetOutput(os.Stdout)
+  if gin.Mode() == gin.DebugMode {
+    logrus.SetLevel(logrus.DebugLevel)
+  } else {
+    logrus.SetLevel(logrus.InfoLevel)
+  }
 
-	api := router.Group("/api")
-	user := api.Group("/user")
+  router.Use(gin.Logger())
+  router.Use(gin.ErrorLogger())
+  router.Use(gin.Recovery())
 
-	user.Use()
-	{
-		user.GET("/", controllers.FindUsers())
-		user.POST("/", controllers.CreateUser())
-		user.GET("/:uid", controllers.FindUser())
-		user.PUT("/:uid", controllers.UpdateUser())
-		user.DELETE("/:uid", controllers.DeleteUser())
-	}
+  api := router.Group("/api")
 
-	router.Run()
+  userController.Register(api.Group("/user"))
+
+  if port := os.Getenv("PORT"); port == "" {
+    logrus.WithField("PORT", 8080).Info("No environment variable PORT, default port is in used")
+  } else {
+    logrus.WithField("PORT", port).Info("Set port from environment variable PORT")
+  }
+
+  router.Run()
 }

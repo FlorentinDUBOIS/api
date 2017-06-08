@@ -1,5 +1,5 @@
-hash: 850f167771f3dc24f83f680af66474dce7a0c7a747da91559f661b4dca24fe07
-updated: 2017-05-30T23:58:45.454204051+02:00
+hash: 963dbadd6ebda58c64a15c3c9ed81f253a55ccd02c0bc8eb7bdc222fa8e1641a
+updated: 2017-06-04T13:58:41.958442528+02:00
 imports:
 - name: github.com/gin-gonic/gin
   version: e2212d40c62a98b388a5eb48ecbdcf88534688ba
@@ -25,10 +25,15 @@ imports:
   version: ee05b128a739a0fb76c7ebd3ae4810c1de808d6d
 - name: github.com/mattn/go-isatty
   version: fc9e8d8ef48496124e79ae0df75490096eccf6fe
-- name: github.com/op/go-logging
-  version: b2cb9fa56473e98db8caba80237377e83fe44db5
+- name: github.com/satori/go.uuid
+  version: 879c5887cd475cd7864858769793b2ceb0d44feb
 - name: github.com/sirupsen/logrus
   version: ba1b36c82c5e05c4f912a88eab0dcd91a171688f
+- name: golang.org/x/crypto
+  version: e1a4589e7d3ea14a3352255d04b6f1a418845e5e
+  subpackages:
+  - bcrypt
+  - blowfish
 - name: golang.org/x/net
   version: f315505cf3349909cdf013ea56690da34e96a451
   subpackages:
