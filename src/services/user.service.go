@@ -46,9 +46,7 @@ func (*UserService) Update(pUUID string, pUser *api.User) (*api.User, error) {
 	}
 
 	user := pgUserFactory.Compose(userRepository.FindByUUID(pUUID), pUser)
-
-	_, err := userRepository.Save(user)
-	if err != nil {
+	if _, err := userRepository.Save(user); err != nil {
 		return nil, err
 	}
 
