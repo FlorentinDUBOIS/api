@@ -72,5 +72,6 @@ func bouncer(cmd *cobra.Command, args []string) {
 
 	port := fmt.Sprintf(":%d", viper.GetInt("port"))
 
+	log.Infof("Listen and serve on :%d", viper.GetInt("port"))
 	router.Run(port)
 }
