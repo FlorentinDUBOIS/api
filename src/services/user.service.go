@@ -1,9 +1,9 @@
 package services
 
 import (
-	"gitlab.com/FlorentinDUBOIS/api/src/provider/postgresql"
-	"gitlab.com/FlorentinDUBOIS/api/src/provider/repositories"
-	"gitlab.com/FlorentinDUBOIS/api/src/services/factories"
+	"github.com/FlorentinDUBOIS/api/src/provider/postgresql"
+	"github.com/FlorentinDUBOIS/api/src/provider/repositories"
+	"github.com/FlorentinDUBOIS/api/src/services/factories"
 )
 
 var userRepository = repositories.UserRepository{}

@@ -5,8 +5,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
-	"gitlab.com/FlorentinDUBOIS/api/src/provider/postgresql"
-	"gitlab.com/FlorentinDUBOIS/api/src/services"
+	"github.com/FlorentinDUBOIS/api/src/provider/postgresql"
+	"github.com/FlorentinDUBOIS/api/src/services"
 )
 
 var userService = services.UserService{}

@@ -2,7 +2,7 @@ package factories
 
 import (
 	"github.com/sirupsen/logrus"
-	"gitlab.com/FlorentinDUBOIS/api/src/provider/postgresql"
+	"github.com/FlorentinDUBOIS/api/src/provider/postgresql"
 )
 
 // UserFactory structure

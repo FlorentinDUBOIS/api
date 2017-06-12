@@ -5,7 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
-	"gitlab.com/FlorentinDUBOIS/api/src/controllers"
+	"github.com/FlorentinDUBOIS/api/src/controllers"
 )
 
 var userController = controllers.UserController{}

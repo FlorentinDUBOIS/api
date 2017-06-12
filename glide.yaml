@@ -1,4 +1,4 @@
-package: gitlab.com/FlorentinDUBOIS/api
+package: github.com/FlorentinDUBOIS/api
 import:
 - package: github.com/gin-gonic/gin
   version: ^1.1.4

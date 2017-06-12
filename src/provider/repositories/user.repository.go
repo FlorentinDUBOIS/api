@@ -7,7 +7,7 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres" // import postgresql driver needed by gorm
 	"github.com/sirupsen/logrus"
-	"gitlab.com/FlorentinDUBOIS/api/src/provider/postgresql"
+	"github.com/FlorentinDUBOIS/api/src/provider/postgresql"
 )
 
 var database *gorm.DB
