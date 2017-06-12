@@ -1,9 +1,9 @@
 package services
 
 import (
-  "gitlab.com/FlorentinDUBOIS/api/src/provider/postgresql"
-  "gitlab.com/FlorentinDUBOIS/api/src/provider/repositories"
-  "gitlab.com/FlorentinDUBOIS/api/src/services/factories"
+	"gitlab.com/FlorentinDUBOIS/api/src/provider/postgresql"
+	"gitlab.com/FlorentinDUBOIS/api/src/provider/repositories"
+	"gitlab.com/FlorentinDUBOIS/api/src/services/factories"
 )
 
 var userRepository = repositories.UserRepository{}
@@ -13,28 +13,32 @@ var userFactory = factories.UserFactory{}
 type UserService struct{}
 
 // Find users
-func (*UserService) Find() []postgresql.User {
-  return userRepository.Find()
+func (*UserService) Find() []*postgresql.User {
+	return userRepository.Find()
 }
 
 // FindOne user
-func (*UserService) FindOne(pUuid string) postgresql.User {
-  return userRepository.FindByUuid(pUuid)
+func (*UserService) FindOne(pUUID string) *postgresql.User {
+	return userRepository.FindByUUID(pUUID)
 }
 
 // Save an user
-func (*UserService) Save(user postgresql.User) postgresql.User {
-  return userRepository.Save(user)
+func (*UserService) Save(pUser *postgresql.User) (*postgresql.User, error) {
+	return userRepository.Save(pUser)
 }
 
 // Update an user
-func (*UserService) Update(pUuid string, pUser postgresql.User) postgresql.User {
-  user := userFactory.Assign(userRepository.FindByUuid(pUuid), pUser)
+func (*UserService) Update(pUUID string, pUser *postgresql.User) (*postgresql.User, error) {
+	user := userFactory.Assign(userRepository.FindByUUID(pUUID), pUser)
 
-  return userRepository.Save(user)
+	if error := user.EncryptPassword(); error != nil {
+		return nil, error
+	}
+
+	return userRepository.Save(user)
 }
 
 // Delete an user
-func (*UserService) Delete(pUuid string) error {
-  return userRepository.Delete(pUuid)
+func (*UserService) Delete(pUUID string) error {
+	return userRepository.Delete(pUUID)
 }

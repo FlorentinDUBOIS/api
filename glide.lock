@@ -1,5 +1,5 @@
-hash: 963dbadd6ebda58c64a15c3c9ed81f253a55ccd02c0bc8eb7bdc222fa8e1641a
-updated: 2017-06-04T13:58:41.958442528+02:00
+hash: 03efaafe7adb84bfe37a034a43e66ac995f1307f3a0a3d52cf251355854f3d99
+updated: 2017-06-09T11:55:31.67438921+02:00
 imports:
 - name: github.com/gin-gonic/gin
   version: e2212d40c62a98b388a5eb48ecbdcf88534688ba
@@ -42,6 +42,8 @@ imports:
   version: b90f89a1e7a9c1f6b918820b3daa7f08488c8594
   subpackages:
   - unix
+- name: gopkg.in/appleboy/gin-jwt.v2
+  version: f7347d7c16fc8297bf5b7215b9e4847a5ca05d90
 - name: gopkg.in/go-playground/validator.v8
   version: c193cecd124b5cc722d7ee5538e945bdb3348435
 - name: gopkg.in/yaml.v2

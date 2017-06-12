@@ -1,43 +1,49 @@
 package factories
 
 import (
-  "github.com/sirupsen/logrus"
-  "gitlab.com/FlorentinDUBOIS/api/src/provider/postgresql"
+	"github.com/sirupsen/logrus"
+	"gitlab.com/FlorentinDUBOIS/api/src/provider/postgresql"
 )
 
 // UserFactory structure
 type UserFactory struct{}
 
 // Assign user to another one
-func (*UserFactory) Assign(pDest postgresql.User, pSrc postgresql.User) postgresql.User {
-  logrus.WithField("dest", pDest).WithField("src", pSrc).Debug("UserFactory; Start assignment")
+func (*UserFactory) Assign(pDest *postgresql.User, pSrc *postgresql.User) *postgresql.User {
+	logrus.WithField("dest", pDest).WithField("src", pSrc).Debug("UserFactory; Start assignment")
 
-  if len(pSrc.ID) > 0 {
-    pDest.ID = pSrc.ID
-  }
+	if pDest != nil && pSrc != nil {
+		if pSrc.ID != "" {
+			pDest.ID = pSrc.ID
+		}
 
-  if len(pSrc.FirstName) > 0 {
-    pDest.FirstName = pSrc.FirstName
-  }
+		if pSrc.FirstName != "" {
+			pDest.FirstName = pSrc.FirstName
+		}
 
-  if len(pSrc.LastName) > 0 {
-    pDest.FirstName = pSrc.FirstName
-  }
+		if pSrc.LastName != "" {
+			pDest.LastName = pSrc.LastName
+		}
 
-  if len(pSrc.Email) > 0 {
-    pDest.Email = pSrc.Email
-  }
+		if pSrc.Email != "" {
+			pDest.Email = pSrc.Email
+		}
 
-  if len(pSrc.Password) > 0 {
-    pDest.Password = pSrc.Password
+		if pSrc.Password != "" {
+			pDest.Password = pSrc.Password
+		}
 
-    if error := pDest.EncryptPassword(); error != nil {
-      logrus.Error(error)
-    }
-  }
+		if pSrc.CreatedAt.String() != "" {
+			pDest.CreatedAt = pSrc.CreatedAt
+		}
 
-  pDest.DeletedAt = pSrc.DeletedAt
+		if pSrc.UpdatedAt.String() != "" {
+			pDest.UpdatedAt = pSrc.UpdatedAt
+		}
 
-  logrus.WithField("dest", pDest).WithField("src", pSrc).Debug("UserFactory; Assignment done")
-  return pDest
+		pDest.DeletedAt = pSrc.DeletedAt
+	}
+
+	logrus.WithField("dest", pDest).WithField("src", pSrc).Debug("UserFactory; Assignment done")
+	return pDest
 }
