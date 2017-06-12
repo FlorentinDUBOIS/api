@@ -1,41 +1,58 @@
 package services
 
 import (
-	"github.com/FlorentinDUBOIS/api/src/provider/postgresql"
-	"github.com/FlorentinDUBOIS/api/src/provider/repositories"
-	"github.com/FlorentinDUBOIS/api/src/services/factories"
+	"github.com/FlorentinDUBOIS/bouncer/src/provider/api"
+	"github.com/FlorentinDUBOIS/bouncer/src/provider/repositories"
+	"github.com/FlorentinDUBOIS/bouncer/src/services/factories"
 )
 
-var userRepository = repositories.UserRepository{}
-var userFactory = factories.UserFactory{}
+var userRepository = new(repositories.UserRepository)
+var apiUserFactory = new(factories.APIUserFactory)
+var pgUserFactory = new(factories.PostgresUserFactory)
 
 // UserService structure
 type UserService struct{}
 
 // Find users
-func (*UserService) Find() []*postgresql.User {
-	return userRepository.Find()
+func (*UserService) Find() []*api.User {
+	return apiUserFactory.FromPostgresArray(userRepository.Find())
 }
 
 // FindOne user
-func (*UserService) FindOne(pUUID string) *postgresql.User {
-	return userRepository.FindByUUID(pUUID)
+func (*UserService) FindOne(pUUID string) *api.User {
+	return apiUserFactory.FromPostgres(userRepository.FindByUUID(pUUID))
 }
 
 // Save an user
-func (*UserService) Save(pUser *postgresql.User) (*postgresql.User, error) {
-	return userRepository.Save(pUser)
+func (*UserService) Save(pUser *api.User) (*api.User, error) {
+	if err := pUser.EncryptPassword(); err != nil {
+		return nil, err
+	}
+
+	user, err := userRepository.Save(pgUserFactory.FromAPI(pUser))
+	if err != nil {
+		return nil, err
+	}
+
+	return apiUserFactory.FromPostgres(user), nil
 }
 
 // Update an user
-func (*UserService) Update(pUUID string, pUser *postgresql.User) (*postgresql.User, error) {
-	user := userFactory.Assign(userRepository.FindByUUID(pUUID), pUser)
-
-	if error := user.EncryptPassword(); error != nil {
-		return nil, error
+func (*UserService) Update(pUUID string, pUser *api.User) (*api.User, error) {
+	if pUser.Password != nil {
+		if err := pUser.EncryptPassword(); err != nil {
+			return nil, err
+		}
 	}
 
-	return userRepository.Save(user)
+	user := pgUserFactory.Compose(userRepository.FindByUUID(pUUID), pUser)
+
+	_, err := userRepository.Save(user)
+	if err != nil {
+		return nil, err
+	}
+
+	return apiUserFactory.FromPostgres(user), nil
 }
 
 // Delete an user

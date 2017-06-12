@@ -1,39 +1,13 @@
 package main
 
 import (
-	"os"
+	log "github.com/Sirupsen/logrus"
 
-	"github.com/gin-gonic/gin"
-	"github.com/sirupsen/logrus"
-	"github.com/FlorentinDUBOIS/api/src/controllers"
+	"github.com/FlorentinDUBOIS/bouncer/src/cmd"
 )
 
-var userController = controllers.UserController{}
-
 func main() {
-	router := gin.New()
-
-	logrus.SetOutput(os.Stdout)
-	if gin.Mode() == gin.DebugMode {
-		logrus.SetLevel(logrus.DebugLevel)
-	} else {
-		logrus.SetLevel(logrus.InfoLevel)
+	if err := cmd.RootCmd.Execute(); err != nil {
+		log.Fatal(err)
 	}
-
-	router.Use(gin.Logger())
-	router.Use(gin.ErrorLogger())
-	router.Use(gin.Recovery())
-
-	api := router.Group("/api")
-
-	userController.Register(api.Group("/user"))
-
-	if port := os.Getenv("PORT"); port == "" {
-		logrus.WithField("PORT", 8080).Info("No environment variable PORT, default port is in used")
-	} else {
-		logrus.WithField("PORT", port).Info("Set port from environment variable PORT")
-	}
-
-	logrus.Info("Listen and Serve")
-	router.Run()
 }

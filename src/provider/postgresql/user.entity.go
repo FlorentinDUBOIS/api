@@ -5,8 +5,6 @@ import (
 
 	"github.com/jinzhu/gorm"
 	uuid "github.com/satori/go.uuid"
-	"github.com/sirupsen/logrus"
-	"golang.org/x/crypto/bcrypt"
 )
 
 // User model
@@ -21,25 +19,9 @@ type User struct {
 	DeletedAt *time.Time
 }
 
-// EncryptPassword of the user
-func (user *User) EncryptPassword() error {
-	password, error := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
-
-	if error != nil {
-		return error
-	}
-
-	user.Password = string(password)
-
-	return nil
-}
-
 // BeforeCreate an user
 func (user *User) BeforeCreate(pScope *gorm.Scope) error {
-	id := uuid.NewV4().String()
-
-	logrus.WithField("uuid", id).Info("Set identifier")
-	user.ID = id
+	user.ID = uuid.NewV4().String()
 
 	return nil
 }

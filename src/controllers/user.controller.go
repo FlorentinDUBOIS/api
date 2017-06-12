@@ -3,20 +3,18 @@ package controllers
 import (
 	"net/http"
 
+	"github.com/FlorentinDUBOIS/bouncer/src/provider/api"
+	"github.com/FlorentinDUBOIS/bouncer/src/services"
 	"github.com/gin-gonic/gin"
-	"github.com/sirupsen/logrus"
-	"github.com/FlorentinDUBOIS/api/src/provider/postgresql"
-	"github.com/FlorentinDUBOIS/api/src/services"
 )
 
-var userService = services.UserService{}
-var userController = UserController{}
+var userService = new(services.UserService)
 
 // UserController structure
 type UserController struct{}
 
 // Register routes
-func (*UserController) Register(pRouter *gin.RouterGroup) {
+func (userController *UserController) Register(pRouter *gin.RouterGroup) {
 	pRouter.Use()
 	{
 		pRouter.GET("/", userController.Find)
@@ -29,29 +27,23 @@ func (*UserController) Register(pRouter *gin.RouterGroup) {
 
 // Find users
 func (*UserController) Find(pContext *gin.Context) {
-	logrus.Info("Handle search of users")
 	pContext.JSON(http.StatusOK, userService.Find())
 }
 
 // Create an user
 func (*UserController) Create(pContext *gin.Context) {
-	user := &postgresql.User{}
+	user := new(api.User)
 
-	if error := pContext.BindJSON(user); error != nil {
-		logrus.Error(error)
-		pContext.JSON(http.StatusBadRequest, error)
+	if err := pContext.BindJSON(user); err != nil {
+		pContext.JSON(http.StatusBadRequest, err)
 
 		return
 	}
 
-	logrus.WithField("user", user).Info("Handle creation of user")
-
-	if savedUser, error := userService.Save(user); error == nil {
-		logrus.WithField("user", savedUser).Debug("Create new user")
-		pContext.JSON(http.StatusOK, user)
+	if userSaved, err := userService.Save(user); err == nil {
+		pContext.JSON(http.StatusOK, userSaved)
 	} else {
-		logrus.Error(error)
-		pContext.AbortWithError(http.StatusInternalServerError, error)
+		pContext.AbortWithError(http.StatusInternalServerError, err)
 	}
 }
 
@@ -59,40 +51,33 @@ func (*UserController) Create(pContext *gin.Context) {
 func (*UserController) FindOne(pContext *gin.Context) {
 	uuid := pContext.Param("uuid")
 
-	logrus.WithField("uuid", uuid).Info("Handle search of user")
 	pContext.JSON(http.StatusOK, userService.FindOne(uuid))
 }
 
 // Update user
 func (*UserController) Update(pContext *gin.Context) {
-	user := &postgresql.User{}
+	user := new(api.User)
 	uuid := pContext.Param("uuid")
 
-	if error := pContext.BindJSON(user); error != nil {
-		logrus.Error(error)
-		pContext.AbortWithError(http.StatusBadRequest, error)
+	if err := pContext.BindJSON(user); err != nil {
+		pContext.AbortWithError(http.StatusBadRequest, err)
 
 		return
 	}
 
-	logrus.WithField("uuid", uuid).WithField("user", user).Info("Handle update of user")
-	if updatedUser, error := userService.Update(uuid, user); error == nil {
-		logrus.WithField("user", updatedUser).Debug("Updated user")
-		pContext.JSON(http.StatusOK, updatedUser)
+	if userUpdated, err := userService.Update(uuid, user); err == nil {
+		pContext.JSON(http.StatusOK, userUpdated)
 	} else {
-		logrus.Error(error)
-		pContext.AbortWithError(http.StatusInternalServerError, error)
+		pContext.AbortWithError(http.StatusInternalServerError, err)
 	}
 }
 
-// Delete use
+// Delete user
 func (*UserController) Delete(pContext *gin.Context) {
 	uuid := pContext.Param("uuid")
 
-	logrus.WithField("uuid", uuid).Info("Delete user")
-	if error := userService.Delete(uuid); error != nil {
-		logrus.Error(error)
-		pContext.AbortWithError(http.StatusInternalServerError, error)
+	if err := userService.Delete(uuid); err != nil {
+		pContext.AbortWithError(http.StatusInternalServerError, err)
 
 		return
 	}
