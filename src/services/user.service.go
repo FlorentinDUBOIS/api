@@ -1,14 +1,6 @@
 package services
 
-import (
-	"github.com/FlorentinDUBOIS/bouncer/src/provider/api"
-	"github.com/FlorentinDUBOIS/bouncer/src/provider/repositories"
-	"github.com/FlorentinDUBOIS/bouncer/src/services/factories"
-)
-
-var userRepository = new(repositories.UserRepository)
-var apiUserFactory = new(factories.APIUserFactory)
-var pgUserFactory = new(factories.PostgresUserFactory)
+import "github.com/FlorentinDUBOIS/bouncer/src/provider/api"
 
 // UserService structure
 type UserService struct{}

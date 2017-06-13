@@ -10,8 +10,8 @@ import (
 
 var database *gorm.DB
 
-// Init the database
-func Init() {
+// InitDatabase function
+func InitDatabase() {
 	host := viper.GetString("postgres-host")
 	user := viper.GetString("postgres-user")
 	password := viper.GetString("postgres-password")

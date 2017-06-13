@@ -26,6 +26,15 @@ func (*UserRepository) FindByUUID(pUUID string) *postgresql.User {
 	return user
 }
 
+// FindByEmail an user
+func (*UserRepository) FindByEmail(pEmail string) *postgresql.User {
+	user := new(postgresql.User)
+
+	database.Where("email = ?", pEmail).Find(user)
+
+	return user
+}
+
 // Save an user
 func (*UserRepository) Save(pUser *postgresql.User) (*postgresql.User, error) {
 	tx := database.Begin()

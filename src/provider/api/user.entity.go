@@ -32,3 +32,12 @@ func (user *User) EncryptPassword() error {
 
 	return nil
 }
+
+// CheckPassword is the same as the user
+func (user *User) CheckPassword(pPassword string) bool {
+	if err := bcrypt.CompareHashAndPassword([]byte(*user.Password), []byte(pPassword)); err != nil {
+		return false
+	}
+
+	return true
+}

@@ -8,14 +8,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var userService = new(services.UserService)
-
 // UserController structure
 type UserController struct{}
 
 // Register routes
 func (userController *UserController) Register(pRouter *gin.RouterGroup) {
-	pRouter.Use()
+	pRouter.Use(services.JWTMiddleware.MiddlewareFunc())
 	{
 		pRouter.GET("/", userController.Find)
 		pRouter.POST("/", userController.Create)
