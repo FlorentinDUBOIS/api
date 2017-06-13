@@ -3,8 +3,8 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/FlorentinDUBOIS/bouncer/src/provider/api"
-	"github.com/FlorentinDUBOIS/bouncer/src/services"
+	"github.com/FlorentinDUBOIS/bouncer/provider/api"
+	"github.com/FlorentinDUBOIS/bouncer/services"
 	"github.com/gin-gonic/gin"
 )
 

@@ -2,16 +2,19 @@ package cmd
 
 import (
 	"fmt"
+	"sync"
 
-	"github.com/FlorentinDUBOIS/bouncer/src/controllers"
-	"github.com/FlorentinDUBOIS/bouncer/src/provider/repositories"
-	"github.com/FlorentinDUBOIS/bouncer/src/services"
+	"github.com/FlorentinDUBOIS/bouncer/controllers"
+	"github.com/FlorentinDUBOIS/bouncer/provider/repositories"
+	"github.com/FlorentinDUBOIS/bouncer/services"
 	log "github.com/Sirupsen/logrus"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	formatter "github.com/x-cray/logrus-prefixed-formatter"
 )
+
+var once = new(sync.Once)
 
 // RootCmd launch the aggregator agent
 var RootCmd = &cobra.Command{
@@ -81,9 +84,11 @@ func configurate() {
 		}
 	}
 
-	log.Debug("Initialize components")
-	repositories.InitDatabase()
-	services.InitJWT()
+	once.Do(func() {
+		log.Debug("Initialize components")
+		repositories.Init()
+		services.Init()
+	})
 }
 
 // bouncer main function

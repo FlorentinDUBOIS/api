@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"github.com/FlorentinDUBOIS/bouncer/src/services"
+	"github.com/FlorentinDUBOIS/bouncer/services"
 	"github.com/gin-gonic/gin"
 )
 

@@ -1,6 +1,6 @@
 package services
 
-import "github.com/FlorentinDUBOIS/bouncer/src/provider/api"
+import "github.com/FlorentinDUBOIS/bouncer/provider/api"
 
 // UserService structure
 type UserService struct{}

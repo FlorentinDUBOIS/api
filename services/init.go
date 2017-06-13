@@ -3,18 +3,24 @@ package services
 import (
 	"time"
 
-	"github.com/FlorentinDUBOIS/bouncer/src/provider/api"
+	"github.com/FlorentinDUBOIS/bouncer/provider/api"
+	"github.com/FlorentinDUBOIS/bouncer/provider/repositories"
+	"github.com/FlorentinDUBOIS/bouncer/services/factories"
 	"github.com/badoux/checkmail"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 	jwt "gopkg.in/appleboy/gin-jwt.v2"
 )
 
+var userRepository = new(repositories.UserRepository)
+var apiUserFactory = new(factories.APIUserFactory)
+var pgUserFactory = new(factories.PostgresUserFactory)
+
 // JWTMiddleware to secure the API
 var JWTMiddleware *jwt.GinJWTMiddleware
 
-// InitJWT middleware
-func InitJWT() {
+// Init middleware
+func Init() {
 	JWTMiddleware = &jwt.GinJWTMiddleware{
 		Realm:      viper.GetString("jwt-realm"),
 		Key:        []byte(viper.GetString("jwt-secret")),

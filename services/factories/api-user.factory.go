@@ -1,8 +1,8 @@
 package factories
 
 import (
-	"github.com/FlorentinDUBOIS/bouncer/src/provider/api"
-	"github.com/FlorentinDUBOIS/bouncer/src/provider/postgresql"
+	"github.com/FlorentinDUBOIS/bouncer/provider/api"
+	"github.com/FlorentinDUBOIS/bouncer/provider/postgresql"
 )
 
 // APIUserFactory structure

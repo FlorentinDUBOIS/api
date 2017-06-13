@@ -1,7 +1,7 @@
 package repositories
 
 import (
-	"github.com/FlorentinDUBOIS/bouncer/src/provider/postgresql"
+	"github.com/FlorentinDUBOIS/bouncer/provider/postgresql"
 	_ "github.com/jinzhu/gorm/dialects/postgres" // import postgresql driver needed by gorm
 )
 
