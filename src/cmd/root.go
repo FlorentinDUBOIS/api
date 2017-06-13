@@ -13,7 +13,6 @@ import (
 	formatter "github.com/x-cray/logrus-prefixed-formatter"
 )
 
-var verbose bool
 var once = new(sync.Once)
 
 // RootCmd launch the aggregator agent
@@ -28,9 +27,9 @@ func init() {
 	cobra.OnInitialize(configurate)
 
 	// register flags
-	RootCmd.PersistentFlags().BoolVar(&verbose, "verbose", false, "Set output to verbose")
-
+	RootCmd.Flags().Bool("verbose", false, "Set output to verbose")
 	RootCmd.Flags().Uint("port", 8080, "Set port to listen")
+	RootCmd.Flags().String("config", "", "Set configuration file")
 	RootCmd.Flags().String("postgres-host", "127.0.0.1", "Set ip address of postgres")
 	RootCmd.Flags().String("postgres-user", "postgres", "Set user of the database")
 	RootCmd.Flags().String("postgres-password", "", "Set password of the database")
@@ -45,14 +44,48 @@ func init() {
 func configurate() {
 	log.SetFormatter(new(formatter.TextFormatter))
 
-	if verbose {
+	if viper.GetBool("verbose") {
 		gin.SetMode(gin.DebugMode)
+
 		log.SetLevel(log.DebugLevel)
+		log.Info("Set log level to debug")
 	} else {
 		gin.SetMode(gin.ReleaseMode)
+
 		log.SetLevel(log.InfoLevel)
+		log.Info("Set log level to info")
 	}
 
+	// Allow recuperation from the environnement variable
+	viper.SetEnvPrefix("bouncer")
+	viper.AutomaticEnv()
+
+	// Allow recuperation from file
+	viper.AddConfigPath("/etc/bouncer/")
+	viper.AddConfigPath("$HOME/.bouncer")
+	viper.AddConfigPath(".")
+
+	// Load config from file
+	viper.SetConfigName("config")
+	if err := viper.MergeInConfig(); err != nil {
+		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
+			log.Debug("No config file found")
+		} else {
+			log.Panicf("Fatal error in config file: %v \n", err)
+		}
+	}
+
+	// Load user defined config
+	if viper.GetString("config") != "" {
+		log.Debugf("Load user configuration file: %s", viper.GetString("config"))
+		viper.SetConfigFile(viper.GetString("config"))
+
+		if err := viper.ReadInConfig(); err != nil {
+			log.Panicf("Fatal error in config file: %v \n", err)
+		}
+	}
+
+	log.Debug("Initialize the database access")
 	once.Do(repositories.Init)
 }
 
