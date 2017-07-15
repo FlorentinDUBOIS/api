@@ -1,6 +1,7 @@
 # Affect compiler and flags
 CC := go build
 GET := go get
+GLIDE := glide
 LINTER := gometalinter.v1
 FORMAT := gofmt -w -s
 
@@ -19,12 +20,18 @@ GITHASH := $(shell git rev-parse HEAD)
 build: bouncer.go
 	$(CC) $(CFLAGS) -o $(BUILD_DIR)/$(APP_NAME) bouncer.go
 
+.PHONY: install
+install: get glide-install lint-install
+
 .PHONY: get
 get:
 	$(GET) -u gopkg.in/alecthomas/gometalinter.v1 github.com/Masterminds/glide
 
-.PHONY: install
-install:
+.PHONY: glide-install
+	$(GLIDE) install
+
+.PHONY: lint-install
+lint-install:
 	$(LINTER) --install --update
 
 .PHONY: lint
