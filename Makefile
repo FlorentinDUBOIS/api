@@ -28,6 +28,7 @@ get:
 	$(GET) -u gopkg.in/alecthomas/gometalinter.v1 github.com/Masterminds/glide
 
 .PHONY: glide-install
+glide-install:
 	$(GLIDE) install
 
 .PHONY: lint-install
