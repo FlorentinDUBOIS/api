@@ -31,7 +31,7 @@ install:
 
 .PHONY: lint
 lint:
-	$(LINTER) --vendor --disable-all --enable=gocyclo --enable=structcheck --enable=aligncheck --enable=deadcode --enable=ineffassign --enable=dupl --enable=golint --enable=gotype --enable=goimports --enable=errcheck --enable=varcheck --enable=interfacer --enable=goconst --enable=gosimple --enable=staticcheck --enable=unparam --enable=unused --enable=misspell --enable=lll --enable=gas --tests ./...
+	$(LINTER) --vendor --deadline=300s --disable-all --enable=gocyclo --enable=structcheck --enable=aligncheck --enable=deadcode --enable=ineffassign --enable=dupl --enable=golint --enable=gotype --enable=goimports --enable=errcheck --enable=varcheck --enable=interfacer --enable=goconst --enable=gosimple --enable=staticcheck --enable=unparam --enable=unused --enable=misspell --enable=lll --enable=gas --tests ./...
 
 .PHONY: format
 format:
