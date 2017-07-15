@@ -1,7 +1,6 @@
 # Affect compiler and flags
 CC := go build
 GET := go get
-GLIDE := glide
 LINTER := gometalinter.v1
 FORMAT := gofmt -w -s
 
@@ -26,7 +25,6 @@ get:
 
 .PHONY: install
 install:
-	$(GLIDE) install
 	$(LINTER) --install --update
 
 .PHONY: lint
