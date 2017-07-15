@@ -1,0 +1,17 @@
+language: go
+
+go:
+  - 1.8
+  - 1.7
+  - 1.6
+
+go_import_path: github.com/FlorentinDUBOIS/bouncer
+
+before_script:
+  - make get
+
+script:
+  - make install
+  - make lint
+  - make format
+  - make
