@@ -9,10 +9,9 @@ go_import_path: github.com/FlorentinDUBOIS/bouncer
 
 before_script:
   - make get
-  - make lint-install
+  - make install
 
 script:
-  - make glide-install
-  - make lint
+  - make lint-ci
   - make format
   - make

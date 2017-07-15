@@ -34,6 +34,10 @@ get:
 lint-install:
 	$(LINTER) --install --update
 
+.PHONY: lint-ci
+lint-ci:
+	$(LINTER) --vendor --deadline=300s --disable-all --enable=gocyclo --enable=deadcode --enable=ineffassign --enable=dupl --enable=golint --enable=goimports --enable=goconst --enable=misspell --enable=lll --enable=gas --tests ./...
+
 .PHONY: lint
 lint:
 	$(LINTER) --vendor --deadline=300s --disable-all --enable=gocyclo --enable=structcheck --enable=aligncheck --enable=deadcode --enable=ineffassign --enable=dupl --enable=golint --enable=gotype --enable=goimports --enable=errcheck --enable=varcheck --enable=interfacer --enable=goconst --enable=gosimple --enable=staticcheck --enable=unparam --enable=unused --enable=misspell --enable=lll --enable=gas --tests ./...
