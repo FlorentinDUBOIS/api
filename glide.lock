@@ -1,5 +1,5 @@
-hash: d3dbf196ab45f81b764a8ee5f9f4a3dffc08a81c7a5ff1416378e69db64aeb19
-updated: 2017-07-15T16:29:47.85878772+02:00
+hash: 2c45508cb94ef485aea3ab762b69884babb4bf3d4d506d2371813fc9a90c0bae
+updated: 2017-07-16T20:52:04.024467353+02:00
 imports:
 - name: github.com/fsnotify/fsnotify
   version: 629574ca2a5df945712d3079857300b5e4da0236
@@ -16,6 +16,12 @@ imports:
   - json/token
 - name: github.com/inconshreveable/mousetrap
   version: 76626ae9c91c4f2a10f34cad8ce83ea42c93bb75
+- name: github.com/jinzhu/gorm
+  version: 5174cc5c242a728b435ea2be8a2f7f998e15429b
+  subpackages:
+  - dialects/postgresql
+- name: github.com/jinzhu/inflection
+  version: 1c35d901db3da928c72a72d8458480cc9ade058f
 - name: github.com/magiconair/properties
   version: be5ece7dd465ab0765a9682137865547526d1dfb
 - name: github.com/mitchellh/mapstructure
@@ -24,6 +30,8 @@ imports:
   version: c37440a7cf42ac63b919c752ca73a85067e05992
 - name: github.com/pelletier/go-toml
   version: 5ccdfb18c776b740aecaf085c4d9a2779199c279
+- name: github.com/satori/go.uuid
+  version: 879c5887cd475cd7864858769793b2ceb0d44feb
 - name: github.com/sirupsen/logrus
   version: a3f95b5c423586578a4e099b11a46c2479628cac
 - name: github.com/spf13/afero
