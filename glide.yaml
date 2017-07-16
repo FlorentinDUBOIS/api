@@ -17,3 +17,9 @@ import:
   version: ^1.1.0
 - package: github.com/spf13/jwalterweatherman
 - package: gopkg.in/yaml.v2
+- package: github.com/jinzhu/gorm
+  version: ^1.0.0
+  subpackages:
+  - dialects/postgresql
+- package: github.com/satori/go.uuid
+  version: ^1.1.0
