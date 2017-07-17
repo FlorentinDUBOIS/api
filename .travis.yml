@@ -5,8 +5,6 @@ go:
   - 1.7
   - 1.6
 
-go_import_path: github.com/FlorentinDUBOIS/bouncer
-
 before_script:
   - make install
   - make lint
