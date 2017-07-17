@@ -1,12 +1,19 @@
 language: go
 
+go_import_path: githuib.com/FlorentinDUBOIS/bouncer
+
 go:
+  - master
   - 1.8
   - 1.7
   - 1.6
 
-before_script:
+install:
   - make install
+
+before_script:
+  make format
+
+script:
   - make lint
-  - make format
   - make
