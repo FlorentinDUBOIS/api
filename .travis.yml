@@ -1,6 +1,6 @@
 language: go
 
-go_import_path: githuib.com/FlorentinDUBOIS/bouncer
+go_import_path: github.com/FlorentinDUBOIS/bouncer
 
 go:
   - master
@@ -12,7 +12,10 @@ install:
   - make install
 
 before_script:
-  make format
+  - pwd
+  - ls
+  - ls vendor
+  - make format
 
 script:
   - make lint

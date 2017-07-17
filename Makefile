@@ -7,7 +7,7 @@ REMOVE := rm -r
 # Command
 BUILD := build
 GET := get
-FMT := fmt
+FMT := gofmt
 
 # Settings
 BUILD_DIR := build
@@ -32,7 +32,7 @@ install:
 
 .PHONY: format
 format:
-	$(CC) $(FMT) -l -w ./cmd ./core bouncer.go
+	$(FMT) -l -w ./cmd ./core bouncer.go
 
 .PHONY: lint
 lint:
