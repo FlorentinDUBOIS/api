@@ -8,15 +8,10 @@ go:
   - 1.7
   - 1.6
 
-install:
+before_script:
   - make install
 
-before_script:
-  - pwd
-  - ls
-  - ls vendor
-  - make format
-
 script:
+  - make format
   - make lint
   - make
